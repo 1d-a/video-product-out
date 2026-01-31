@@ -24,7 +24,7 @@ jobs:
             优化日志.md
           sparse-checkout-cone-mode: false
 
-      - name: Transform 优化日志.md
+      - name: Transform 优化日志.md and update README
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -66,8 +66,22 @@ jobs:
               else:
                   out.append(line)
 
-          Path('优化日志.md').write_text('\n'.join(out) + '\n', encoding='utf-8')
-          print('written 优化日志.md')
+          table = out
+          Path('优化日志.md').write_text('\n'.join(table) + '\n', encoding='utf-8')
+
+          # build README with reversed rows (latest on top)
+          header = '# **从零开始的视频制作**\n\n'
+          if len(table) >= 2:
+              header_line = table[0]
+              sep_line = table[1]
+              body = table[2:]
+              body_rev = list(reversed(body))
+              readme = header + '\n'.join([header_line, sep_line] + body_rev) + '\n'
+          else:
+              readme = header
+
+          Path('README.md').write_text(readme, encoding='utf-8')
+          print('written 优化日志.md and README.md')
           PY
 
       - name: Commit and push
