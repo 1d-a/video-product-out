@@ -53,7 +53,9 @@ jobs:
                   continue
 
               if line.strip().startswith('|'):
-                  cells = [c.strip() for c in line.strip().strip('|').split('|')]
+                  cells = [c.strip() for c in line.strip().split('|')[1:-1]]
+                  while len(cells) < 5:
+                      cells.append('')
                   if len(cells) >= 5:
                       a = cells[1]
                       b = cells[2]
