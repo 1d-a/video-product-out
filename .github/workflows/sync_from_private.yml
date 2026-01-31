@@ -90,10 +90,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # make sure we're up to date in case another run pushed
+          git pull --rebase origin main || true
           git add 优化日志.md README.md
           if git diff --cached --quiet; then
             echo "No changes"
             exit 0
           fi
           git commit -m "Sync 优化日志"
+          git pull --rebase origin main || true
           git push
