@@ -3,6 +3,8 @@ name: Sync 优化日志 from private repo
 on:
   push:
   workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: write
