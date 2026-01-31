@@ -39,8 +39,9 @@ jobs:
           out = []
           header_done = False
           for line in lines:
+              line = line.replace('\u200d','')
               if not line.strip():
-                  # skip empty lines to keep table clean
+                  # skip empty/zero-width lines to keep table clean
                   continue
 
               if line.strip().startswith('|') and '问题/灵感--对具体知识' in line and '问题/灵感--对系统架构' in line:
