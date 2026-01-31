@@ -1,0 +1,83 @@
+name: Sync 优化日志 from private repo
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+
+      - name: Checkout private repo (file only)
+        uses: actions/checkout@v4
+        with:
+          repository: 1d-a/video-product
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: private
+          sparse-checkout: |
+            优化日志.md
+          sparse-checkout-cone-mode: false
+
+      - name: Transform 优化日志.md
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          src = Path('private/优化日志.md')
+          if not src.exists():
+              raise SystemExit('优化日志.md not found')
+
+          lines = src.read_text(encoding='utf-8').splitlines()
+          out = []
+          header_done = False
+          for line in lines:
+              if not line.strip():
+                  out.append(line)
+                  continue
+
+              if line.strip().startswith('|') and '问题/灵感--对具体知识' in line and '问题/灵感--对系统架构' in line:
+                  out.append('|序号|问题/灵感|产出链接|')
+                  header_done = True
+                  continue
+
+              if header_done and line.strip().startswith('|') and set(line.replace('|','').strip()) <= {'-',' '}:
+                  out.append('| --- | --- | --- |')
+                  continue
+
+              if line.strip().startswith('|'):
+                  cells = [c.strip() for c in line.strip().strip('|').split('|')]
+                  if len(cells) >= 5:
+                      a = cells[1]
+                      b = cells[2]
+                      if a and b:
+                          merged = f"{a}；{b}"
+                      else:
+                          merged = a or b
+                      new_cells = [cells[0], merged, cells[4]]
+                      out.append('|' + '|'.join(new_cells) + '|')
+                  else:
+                      out.append(line)
+              else:
+                  out.append(line)
+
+          Path('优化日志.md').write_text('\n'.join(out) + '\n', encoding='utf-8')
+          print('written 优化日志.md')
+          PY
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add 优化日志.md
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Sync 优化日志"
+          git push
