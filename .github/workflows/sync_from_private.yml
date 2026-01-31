@@ -40,7 +40,7 @@ jobs:
           header_done = False
           for line in lines:
               if not line.strip():
-                  out.append(line)
+                  # skip empty lines to keep table clean
                   continue
 
               if line.strip().startswith('|') and '问题/灵感--对具体知识' in line and '问题/灵感--对系统架构' in line:
@@ -57,10 +57,13 @@ jobs:
                   if len(cells) >= 5:
                       a = cells[1]
                       b = cells[2]
+                      extra = cells[3]
                       if a and b:
                           merged = f"{a}；{b}"
                       else:
                           merged = a or b
+                      if not merged:
+                          merged = extra
                       new_cells = [cells[0], merged, cells[4]]
                       out.append('|' + '|'.join(new_cells) + '|')
                   else:
