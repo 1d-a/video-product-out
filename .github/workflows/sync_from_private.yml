@@ -81,7 +81,7 @@ jobs:
           if len(table) >= 2:
               header_line = table[0]
               sep_line = table[1]
-              body = table[2:]
+              body = [l for l in table[2:] if l.strip()]
               body_rev = list(reversed(body))
               readme = header + '\n'.join([header_line, sep_line] + body_rev) + '\n'
           else:
