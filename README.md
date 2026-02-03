@@ -2,6 +2,7 @@
 
 |序号|问题/灵感|产出链接|
 | --- | --- | --- |
+|5|各种对于视频产出的优化|[https://v.douyin.com/r414mN3RmPQ/ e@B.tE NWM:/ 05/16](https://v.douyin.com/r414mN3RmPQ/)|
 |4|看别人视频的工程文件，密密麻麻的小块，直接劝退|[https://v.douyin.com/GKF02nqQ8o8/ w@F.hB wSl:/ 05/17](https://v.douyin.com/GKF02nqQ8o8/)|
 |3|测试仓库同步 2|无|
 |2|测试仓库同步|无|
