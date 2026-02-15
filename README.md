@@ -2,6 +2,9 @@
 
 |序号|问题/灵感|产出链接|
 | --- | --- | --- |
+|11|视频形式和配音，需要重新考虑下||
+|10|感觉真正能练长久能力的，还是写历史吧||
+|9|文案的架构以及写法等，非常重要||
 |8|形式要继续优化，整个制作流程要走通|[https://v.douyin.com/tSx0ggaJreg/ 01/14 Iic:/ t@r.eb](https://v.douyin.com/tSx0ggaJreg/)|
 |7|1. 静止画面太多，降低观看体验<br />2. 想要写个项目尝试让AI帮剪历史剧<br />||
 |6|继续各种优化视频产出|[https://v.douyin.com/96NXNmgmeuQ/ Q@X.mD lpq:/ 05/12](https://v.douyin.com/96NXNmgmeuQ/)|
